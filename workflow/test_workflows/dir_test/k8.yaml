@@ -1,0 +1,35 @@
+process:
+    executor: k8s
+    stageInMode: symlink
+    pod:
+        nodeSelector: usedby=neuhausl
+        volumeClaim: neu-pvc
+        mountPath: /data
+
+k8s: 
+    debug.yaml: true
+    namespace: neuhausl 
+    serviceAccount: snakemake 
+    projectDir: /data/projects/ 
+    imagePullPolicy: IfNotPresent
+    launchDir: /data/launch/
+    runAsUser: 0
+    fetchNodeName: true
+    workDir: /data/work/
+    name: 
+
+report:
+    enabled: true
+    file: /data/output/report.html
+    overwrite: true
+
+params:
+    outdir: /data/output/out
+
+executor:
+    queueSize: 300
+
+dag:
+    enabled: true
+    file: /data/output/dag.html
+    overwrite: true

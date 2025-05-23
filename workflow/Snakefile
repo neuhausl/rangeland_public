@@ -1,0 +1,62 @@
+include: "rules/generate_analysis_mask.smk"
+include: "rules/generate_tile_allow_list.smk"
+include: "rules/preprocess.smk"
+include: "rules/merge.smk"
+include: "rules/process_higher_level.smk"
+include: "rules/process_mosaic.smk"
+include: "rules/process_pyramid.smk"
+# !!! searches from location of the Snakefile !!!
+
+configfile: "config/config.yaml"
+# each .smk modules needs to include the same config file 
+
+HIGHERLVL   =   config["higher_level"]
+TREND       =   config["trend"]
+IMAGE       =   config["force"]
+EMAIL       =   config["email"]
+
+
+# input function to resolve wildcards for higher_level_processing
+def get_tiles(wildcards):
+    # get checkpoint ouptput of higher_lvl_parameters
+    ard_dir = checkpoints.higher_lvl_parameters.get().output.merged_ard  # .output[2] 3rd output should be ard dir
+
+    tiles = [name for name in os.listdir(ard_dir) if os.path.isdir(os.path.join(ard_dir, name))]
+    return tiles
+
+# rule all here, to make execution simpler
+# only last independent rules, to not mess up dependencies
+# other dependencies are handled by the rules in the external modules themselves
+rule all:
+    input:
+       mosaic_output = TREND + "mosaic/",
+       pyramid_output = expand(TREND + "pyramid/{tile}", tile=get_tiles),
+
+# Preparation
+# Check if all data is present
+rule preparation:
+    input:
+        datacube    = config["datacube"],
+        data        = config["data"],
+        aoi         = config["aoi"],
+        wvdb        = config["wvdb"],
+        dem         = config["dem"],
+        endmember   = config["endmember"],
+
+    # create output directories
+    output:
+        directory("results/tmp/"),
+        directory("results/log/")
+
+    # make directories
+    shell:
+        """
+        echo "PREPARATION: check data..."
+
+        mkdir -p {output}
+        """
+
+# onsuccess:
+#     shell("mail -s 'DONE: Workflow finished, with no errors' {EMAIL} < {log}")
+# onerror:
+#     shell("mail -s 'ERROR: Workflow finished, with errors' {EMAIL} < {log}")

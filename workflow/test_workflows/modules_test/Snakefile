@@ -1,0 +1,15 @@
+# inlcude rules
+include: "preprocessing_module.smk"
+include: "processing_module.smk"
+include: "postprocessing_module.smk"
+
+# Define the final output files produced by the workflow in single variables
+pre_output = "pre_processed.txt"
+output = "processed.txt"
+post_output = "post_processed.txt"
+
+# Rule to create dependencies between the modules
+# !!! only last target rule otherwise dependencies get messed up !!!
+rule all:
+    input:
+        post_output

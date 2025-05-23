@@ -1,0 +1,41 @@
+# test profile
+
+email: ""
+
+start_date: "1987-01-01"
+end_date: "1989-12-31"
+sensors_level1: ["LT04", "LT05"]
+sensors_level2: ["LND04", "LND05"]
+tile_range: ["0109", "0109", "0102", "0102"]  # set tile range Xmin, Xmax, Ymin, Ymax 
+resolution: 30
+groupsize: 10
+landsat_dirs: ["181036"] # ["181035", "181036", "182035", "182036"]
+force: "docker://davidfrantz/force:3.7.12"
+
+datacube: "data/datacube-definition.prj"
+data: "data/landsat/"
+dem: "data/dem/"
+wvdb: "data/wvdb/"
+aoi: "data/aoi.gpkg"
+endmember: "data/endmember/"
+preparation: "results/preparation/"
+mask: "results/preparation/mask/"
+preprocess: "results/preprocess/"
+higher_level: "results/higher_level/"
+merged: "results/merged_preprocess/"
+trend: "results/trend/"
+mosaic: "results/trend/mosaic/"
+pyramid: "results/trend/pyramid/"
+params: "results/param/"
+scripts: "workflow/scripts/"
+l2ps_script: "workflow/scripts/force-l2ps-params.sh"
+hlps_script: "workflow/scripts/force-hlps-params.sh"
+
+# reference config
+
+# datacube: "reference/data/datacube-definition.prj"
+# data: "reference/data/Landsat_data/"
+# dem: "reference/data/dem/"
+# wvdb: "reference/data/wvdb/"
+# aoi: "reference/data/aoi.gpkg"
+# endmember: "reference/data/endmember/"

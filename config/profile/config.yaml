@@ -1,0 +1,8 @@
+# VM local execution 16GB 8 Cores
+
+use-singularity: true
+rerun-incomplete: True
+cores: 8
+
+set-threads: "preprocess=2"
+# set-threads: "merge_files=4"
