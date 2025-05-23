@@ -1,7 +1,7 @@
 # FORCE on Snakemake
 ## Rangeland
 ### dependencies:
-#### - landsat files inside the expected folders
+#### - landsat files inside the respective folders
 #### - snakemake/snakemake:v8.20.4
 #### - apptainer/singularity
 #### - (snakemake/snakemake-executor-plugin-kubernetes)
