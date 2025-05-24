@@ -1,4 +1,4 @@
-# FORCE on Snakemake
+# FORCE on Snakemake (public version)
 ## Rangeland
 ### dependencies:
 #### - landsat files inside the respective folders
